@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+
+case "$1" in
+    configure)
+        # Apply the configuration. A failure here must never break package installation:
+        # the user can always check the result with `privux status`.
+        if [ -x /usr/bin/privux ]; then
+            /usr/bin/privux apply || echo "privux: could not apply everything; run 'sudo privux status'" >&2
+        fi
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "privux"
+dynamic = ["version"]
+description = "Privacy hardening tool for the Privux Linux distribution"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+privux = "privux.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "privux.__version__" }
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]

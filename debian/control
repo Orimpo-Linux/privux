@@ -1,0 +1,58 @@
+Source: privux
+Section: utils
+Priority: optional
+Maintainer: Orimpo <itssupercled@gmail.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ pybuild-plugin-pyproject,
+ python3-all,
+ python3-setuptools,
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/Orimpo-Linux/privux
+
+Package: privux-cli
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Recommends: apparmor, network-manager, nftables, systemd-resolved, unattended-upgrades
+Description: Privacy hardening tool for Privux
+ The privux command applies and checks the privacy configuration of the system:
+ inbound firewall, encrypted DNS, per-network MAC addresses, kernel and network
+ hardening, Firefox policies and automatic security updates.
+ .
+ Every setting is an independent option with its own default. The graphical
+ settings panel is a thin layer over this command.
+
+Package: privux-desktop
+Architecture: all
+Depends:
+ ${misc:Depends},
+ apparmor,
+ firefox-esr,
+ flatpak,
+ kde-plasma-desktop,
+ libreoffice,
+ network-manager,
+ nftables,
+ plasma-discover-backend-flatpak,
+ privux-cli (= ${binary:Version}),
+ systemd-resolved,
+ thunderbird,
+ unattended-upgrades,
+Recommends:
+ amd64-microcode,
+ btrfs-progs,
+ firmware-atheros,
+ firmware-iwlwifi,
+ firmware-linux,
+ firmware-realtek,
+ intel-microcode,
+ snapper,
+Description: Privux desktop (KDE Plasma with high-privacy defaults)
+ Meta-package that installs the Privux desktop: KDE Plasma, Firefox ESR,
+ LibreOffice, Thunderbird and the privux hardening tool.
+ .
+ The firmware and microcode packages come from the non-free-firmware
+ component. They are the only closed-source part of the system and are needed
+ for Wi-Fi to work and for CPU security fixes.

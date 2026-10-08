@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+export PYBUILD_SYSTEM=pyproject
+
+%:
+	dh $@ --buildsystem=pybuild
+
+# privux-cli is not named python3-*, so tell pybuild where to install it.
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/privux-cli
