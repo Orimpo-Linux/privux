@@ -17,6 +17,9 @@ permissions:
 jobs:
   live-iso:
     runs-on: ubuntu-24.04
+    container:
+      image: debian:trixie
+      options: --privileged
     timeout-minutes: 240
     steps:
       - name: Checkout Privux
@@ -27,14 +30,14 @@ jobs:
 
       - name: Install ISO build dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+          apt-get update
+          apt-get install -y --no-install-recommends \
             live-build debootstrap squashfs-tools xorriso \
             grub-pc-bin grub-efi-amd64-bin mtools dosfstools \
             rsync ca-certificates
 
       - name: Build Debian 13 live ISO
-        run: sudo bash scripts/build-live-iso.sh
+        run: bash scripts/build-live-iso.sh
 
       - name: Check ISO output
         run: |
