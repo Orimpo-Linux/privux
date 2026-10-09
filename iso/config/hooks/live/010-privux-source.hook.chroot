@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+# The live image carries the same Privux CLI source as this repository.
+# A separate installable Debian package will be integrated after CI validation.
+install -d /opt/privux/src/privux /usr/local/bin
+cp -a /opt/privux-build/src/privux/. /opt/privux/src/privux/
+cat > /usr/local/bin/privux <<'EOF'
+#!/bin/sh
+PYTHONPATH=/opt/privux/src exec /usr/bin/python3 -m privux "$@"
+EOF
+chmod 0755 /usr/local/bin/privux
+rm -rf /opt/privux-build
