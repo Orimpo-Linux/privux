@@ -1,12 +1,52 @@
 #!/bin/sh
 set -eu
-# Wallpaper asset must be present in includes.chroot for branding.
+# Privux identity and desktop branding. Do not weaken SDDM/PAM authentication.
 WALL=/usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+
+# Keep Debian package compatibility while displaying the Privux product identity.
+cat > /etc/os-release <<'EOF'
+PRETTY_NAME="Privux OS 0.2 (Debian 13)"
+NAME="Privux OS"
+VERSION_ID="0.2"
+VERSION="0.2 (Debian 13 trixie)"
+VERSION_CODENAME=trixie
+ID=debian
+ID_LIKE=debian
+HOME_URL="https://github.com/Orimpo-Linux/privux"
+SUPPORT_URL="https://github.com/Orimpo-Linux/privux/issues"
+BUG_REPORT_URL="https://github.com/Orimpo-Linux/privux/issues"
+EOF
+printf '%s\n' 'Privux OS 0.2' > /etc/issue
+printf '%s\n' 'privux' > /etc/hostname
+
 if [ ! -s "$WALL" ]; then
-  echo "Privux wallpaper not present; KDE default remains" >&2
+  echo "WARNING: approved Privux wallpaper missing; branding image not installed" >&2
   exit 0
 fi
-install -d /usr/local/bin /etc/xdg/autostart
+
+install -d /usr/local/bin /etc/xdg/autostart /etc/xdg /etc/sddm.conf.d
+
+# Plasma lock screen uses KDE's normal PAM password authentication.
+cat > /etc/xdg/kscreenlockerrc <<'EOF'
+[Greeter]
+WallpaperPlugin=org.kde.image
+
+[Greeter][Wallpaper][org.kde.image][General]
+Image=file:///usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+PreviewImage=file:///usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+EOF
+
+# SDDM login screen background; retain its standard authentication behavior.
+install -d /usr/share/sddm/themes/breeze
+cat > /usr/share/sddm/themes/breeze/theme.conf.user <<'EOF'
+[General]
+background=/usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+EOF
+cat > /etc/sddm.conf.d/10-privux-theme.conf <<'EOF'
+[Theme]
+Current=breeze
+EOF
+
 cat > /usr/local/bin/privux-wallpaper-once <<'EOF'
 #!/bin/sh
 set -eu
@@ -15,7 +55,7 @@ STAMP="$HOME/.config/privux-wallpaper-set"
 [ -f "$STAMP" ] && exit 0
 [ -s "$WALL" ] || exit 0
 command -v plasma-apply-wallpaperimage >/dev/null 2>&1 || exit 0
-sleep 8
+sleep 5
 plasma-apply-wallpaperimage "$WALL" || exit 0
 mkdir -p "$HOME/.config"
 touch "$STAMP"
@@ -27,6 +67,5 @@ Type=Application
 Name=Privux wallpaper setup
 Exec=/usr/local/bin/privux-wallpaper-once
 OnlyShowIn=KDE;
-X-KDE-autostart-phase=2
 NoDisplay=true
 EOF
