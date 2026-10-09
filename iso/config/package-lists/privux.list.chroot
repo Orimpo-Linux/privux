@@ -1,0 +1,25 @@
+# Privux development live desktop
+live-boot
+live-config
+systemd-sysv
+kde-plasma-desktop
+sddm
+network-manager
+firefox-esr
+libreoffice
+thunderbird
+flatpak
+plasma-discover-backend-flatpak
+nftables
+apparmor
+apparmor-utils
+systemd-resolved
+unattended-upgrades
+wireguard-tools
+openvpn
+network-manager-openvpn
+ca-certificates
+sudo
+curl
+git
+python3
