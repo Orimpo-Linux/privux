@@ -1,0 +1,32 @@
+#!/bin/sh
+set -eu
+# Wallpaper asset must be present in includes.chroot for branding.
+WALL=/usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+if [ ! -s "$WALL" ]; then
+  echo "Privux wallpaper not present; KDE default remains" >&2
+  exit 0
+fi
+install -d /usr/local/bin /etc/xdg/autostart
+cat > /usr/local/bin/privux-wallpaper-once <<'EOF'
+#!/bin/sh
+set -eu
+WALL=/usr/share/wallpapers/Privux/contents/images/1920x1080.jpg
+STAMP="$HOME/.config/privux-wallpaper-set"
+[ -f "$STAMP" ] && exit 0
+[ -s "$WALL" ] || exit 0
+command -v plasma-apply-wallpaperimage >/dev/null 2>&1 || exit 0
+sleep 8
+plasma-apply-wallpaperimage "$WALL" || exit 0
+mkdir -p "$HOME/.config"
+touch "$STAMP"
+EOF
+chmod 0755 /usr/local/bin/privux-wallpaper-once
+cat > /etc/xdg/autostart/privux-wallpaper.desktop <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Privux wallpaper setup
+Exec=/usr/local/bin/privux-wallpaper-once
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2
+NoDisplay=true
+EOF
