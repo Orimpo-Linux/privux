@@ -1,0 +1,51 @@
+name: Build experimental Privux ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/live-iso-builder
+    paths:
+      - "iso/**"
+      - "scripts/build-live-iso.sh"
+      - "src/privux/**"
+      - ".github/workflows/live-iso.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  live-iso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - name: Checkout Privux
+        uses: actions/checkout@v4
+
+      - name: Show disk capacity
+        run: df -h
+
+      - name: Install ISO build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            live-build debootstrap squashfs-tools xorriso \
+            grub-pc-bin grub-efi-amd64-bin mtools dosfstools \
+            rsync ca-certificates
+
+      - name: Build Debian 13 live ISO
+        run: sudo bash scripts/build-live-iso.sh
+
+      - name: Check ISO output
+        run: |
+          ls -lh build/live/*.iso
+          test "$(find build/live -maxdepth 1 -name '*.iso' -type f | wc -l)" -ge 1
+
+      - name: Upload Privux ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: privux-os-experimental-amd64
+          path: build/live/*.iso
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
