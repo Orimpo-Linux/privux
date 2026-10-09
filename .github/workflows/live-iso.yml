@@ -1,10 +1,11 @@
-name: Build experimental Privux ISO
+name: Build Privux Cyber Desktop Beta
 
 on:
   workflow_dispatch:
   push:
     branches:
       - feature/live-iso-builder
+      - feature/privux-desktop-cyber-beta
     paths:
       - "iso/**"
       - "scripts/build-live-iso.sh"
@@ -47,7 +48,7 @@ jobs:
       - name: Upload Privux ISO
         uses: actions/upload-artifact@v4
         with:
-          name: privux-os-experimental-amd64
+          name: privux-cyber-desktop-beta-amd64
           path: build/live/*.iso
           if-no-files-found: error
           retention-days: 7
