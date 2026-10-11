@@ -1,0 +1,21 @@
+name: VPN validation
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  network:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y wireguard-tools nftables iproute2 iputils-ping procps
+      - run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - run: sudo python3 scripts/vpn-netns-test.py
+  desktop:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - uses: actions/checkout@v4
+      - run: apt-get update && apt-get install -y python3-pyside6.qtwidgets python3 iproute2 wireguard-tools nftables bash shellcheck desktop-file-utils
+      - run: shellcheck scripts/setup-vpn-server.sh scripts/install-vpn-client.sh vpn/vpn-helper vpn/privux-vpn
+      - run: desktop-file-validate vpn/privux-vpn.desktop
+      - run: QT_QPA_PLATFORM=offscreen PYTHONPATH=src python3 scripts/vpn-gui-smoke.py

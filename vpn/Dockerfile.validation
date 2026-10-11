@@ -1,0 +1,8 @@
+FROM debian:trixie
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential debhelper dh-python pybuild-plugin-pyproject python3-all \
+    python3-setuptools python3-pyside6.qtwidgets wireguard-tools nftables \
+    iproute2 iputils-ping shellcheck desktop-file-utils qt6-qpa-plugins \
+    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends procps \
+    && rm -rf /var/lib/apt/lists/*

@@ -13,6 +13,8 @@ cd "$ROOT/build/live"
 rsync -a --delete "$ROOT/iso/" ./
 mkdir -p config/includes.chroot/opt/privux-build/src
 rsync -a "$ROOT/src/privux/" config/includes.chroot/opt/privux-build/src/privux/
+mkdir -p config/includes.chroot/opt/privux-build/vpn
+rsync -a "$ROOT/vpn/" config/includes.chroot/opt/privux-build/vpn/
 # Explicitly invoke config because the auto/config file is kept for local use.
 bash auto/config
 lb build

@@ -37,6 +37,7 @@ Depends:
  nftables,
  plasma-discover-backend-flatpak,
  privux-cli (= ${binary:Version}),
+ privux-vpn (= ${binary:Version}),
  systemd-resolved,
  thunderbird,
  unattended-upgrades,
@@ -56,3 +57,10 @@ Description: Privux desktop (KDE Plasma with high-privacy defaults)
  The firmware and microcode packages come from the non-free-firmware
  component. They are the only closed-source part of the system and are needed
  for Wi-Fi to work and for CPU security fixes.
+
+Package: privux-vpn
+Architecture: all
+Depends: ${misc:Depends}, privux-cli (= ${binary:Version}), python3-pyside6.qtwidgets, wireguard-tools, nftables, systemd-resolved, polkitd, pkexec, iproute2, procps
+Description: Orimpo WireGuard graphical client for Privux
+ Imports validated full-tunnel profiles and provides connection controls and
+ an optional persistent kill switch. No VPN connection is enabled by default.
