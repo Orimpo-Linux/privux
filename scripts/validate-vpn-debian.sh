@@ -8,7 +8,7 @@ if ! command -v dpkg-buildpackage >/dev/null; then
 fi
 cd /work
 PYTHONPATH=src python3 -m unittest discover -s tests -v
-shellcheck scripts/setup-vpn-server.sh scripts/install-vpn-client.sh vpn/vpn-helper vpn/privux-vpn
+shellcheck scripts/setup-vpn-server.sh scripts/install-vpn-client.sh vpn/vpn-helper vpn/privux-vpn vpn/privux-vpnctl
 desktop-file-validate vpn/privux-vpn.desktop
 QT_QPA_PLATFORM=offscreen PYTHONPATH=src python3 scripts/vpn-gui-smoke.py
 python3 scripts/vpn-netns-test.py
@@ -21,3 +21,4 @@ find debian -type f -exec chmod 0644 {} +
 chmod 0755 debian/rules debian/privux-cli.postinst
 dpkg-buildpackage -us -uc -b
 cp /build/*.deb /work/out/
+dpkg-deb --fsys-tarfile /build/privux-vpn_0.2.0_all.deb | tar -tf - | grep -q 'usr/lib/systemd/system/privux-vpn-guard.service'

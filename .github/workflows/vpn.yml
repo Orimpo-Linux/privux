@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: apt-get update && apt-get install -y python3-pyside6.qtwidgets python3 iproute2 wireguard-tools nftables bash shellcheck desktop-file-utils
-      - run: shellcheck scripts/setup-vpn-server.sh scripts/install-vpn-client.sh vpn/vpn-helper vpn/privux-vpn
+      - run: shellcheck scripts/setup-vpn-server.sh scripts/install-vpn-client.sh vpn/vpn-helper vpn/privux-vpn vpn/privux-vpnctl
       - run: desktop-file-validate vpn/privux-vpn.desktop
       - run: QT_QPA_PLATFORM=offscreen PYTHONPATH=src python3 scripts/vpn-gui-smoke.py

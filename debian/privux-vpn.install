@@ -4,5 +4,6 @@ vpn/privux-vpnctl usr/bin
 vpn/privux-vpn.desktop usr/share/applications
 vpn/privux-vpn-settings.desktop usr/share/plasma/systemsettings/externalmodules
 vpn/org.orimpo.privux.vpn.policy usr/share/polkit-1/actions
+vpn/privux-vpn-guard.service usr/lib/systemd/system
 vpn/vpn-guard-dependency.conf usr/lib/systemd/system/NetworkManager.service.d
 vpn/vpn-guard-dependency.conf usr/lib/systemd/system/systemd-networkd.service.d
