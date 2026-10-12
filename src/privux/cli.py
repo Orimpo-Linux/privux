@@ -255,6 +255,19 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     raw = sys.argv[1:] if argv is None else list(argv)
+    if raw and raw[0] == 'vpn':
+        import subprocess
+        command = ['/usr/lib/privux/vpn-helper', *(raw[1:] or ['status'])]
+        if not hasattr(os, 'geteuid'):
+            _warn('La VPN només funciona a Linux.')
+            return EXIT_ERROR
+        if os.geteuid() != 0:
+            command.insert(0, '/usr/bin/pkexec')
+        try:
+            return subprocess.run(command, check=False).returncode
+        except OSError as error:
+            _warn(str(error))
+            return EXIT_ERROR
     args = parser.parse_args(raw)
     if args.command is None:
         args = parser.parse_args([*raw, "status"])

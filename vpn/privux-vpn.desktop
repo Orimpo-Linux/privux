@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Privux VPN
+Comment=VPN WireGuard d’Orimpo
+Exec=privux-vpn
+Icon=network-vpn
+Categories=Network;
+Keywords=VPN;WireGuard;Orimpo;Privux;
+Terminal=false

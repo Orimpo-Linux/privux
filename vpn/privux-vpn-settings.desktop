@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=SystemSettingsExternalApp
+Name=Privux VPN
+Comment=VPN WireGuard d’Orimpo
+Icon=network-vpn
+Exec=privux-vpn
+X-KDE-System-Settings-Parent-Category=network
+X-KDE-System-Settings-Parent-Category-V2=network
+X-KDE-Keywords=VPN,WireGuard,Orimpo,Privux
+X-KDE-Weight=80
