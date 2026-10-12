@@ -1,3 +1,11 @@
+privux (0.2.0) UNRELEASED; urgency=medium
+
+  * Add Orimpo WireGuard client, validated profiles and persistent kill switch.
+  * Add graphical desktop controls, Plasma settings entry and Debian package.
+  * Add dedicated test-server provisioning and network-isolated validation.
+
+ -- Orimpo <itssupercled@gmail.com>  Sun, 11 Oct 2026 12:00:00 +0200
+
 privux (0.1.0) UNRELEASED; urgency=medium
 
   * Initial proof of concept: privux command with six hardening options

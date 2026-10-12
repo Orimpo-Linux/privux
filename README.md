@@ -1,5 +1,12 @@
 # Privux
 
+## VPN de proves
+
+El client WireGuard propi, el kill switch opcional, l'entrada a la configuració
+de Plasma i el preparador del servidor de proves són a
+[VPN-PRIMEROS-PASOS.md](docs/VPN-PRIMEROS-PASOS.md). La VPN no es connecta per
+defecte. Aquesta primera versió és per a proves; el servei públic encara no existeix.
+
 Distribució Linux de privacitat d'**Orimpo**. Aquest repositori conté la **fase 1 (prova de concepte)** del full de ruta: l'eina `privux` i els paquets Debian, sense ISO encara.
 
 > Estat: prova de concepte. Pensat per provar-lo sobre un **Debian 13 amb KDE Plasma** instal·lat a mà, idealment en maquinari real.
@@ -80,7 +87,7 @@ Aquests punts s'han escrit a partir de la documentació i el coneixement dels pa
 - **Llicència.** `debian/copyright` diu GPL-3+ de manera **provisional**. Decidir-ho abans de publicar.
 - **Correu del mantenidor** i **URL de GitHub** a `debian/control`: ara són marcadors (`info@orimpo.invalid`, `github.com/orimpo/privux`).
 - **Element.** No és als repositoris de Debian; la via prevista és Flatpak (`im.riot.Riot`). No està al meta-paquet encara.
-- **Antivirus (ClamAV)**, **client VPN** i **panell**: fases 2 i 3 del full de ruta.
+- **Antivirus (ClamAV)** i **panell unificat**: fases posteriors. El client VPN de proves ja està implementat; falta validar-lo al sistema real.
 
 ## Textos i idioma
 

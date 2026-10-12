@@ -3,8 +3,12 @@
 export PYBUILD_SYSTEM=pyproject
 
 %:
-	dh $@ --buildsystem=pybuild
+	dh $@ --with python3 --buildsystem=pybuild
 
 # privux-cli is not named python3-*, so tell pybuild where to install it.
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/privux-cli
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 0755 debian/privux-vpn/usr/lib/privux/vpn-helper debian/privux-vpn/usr/bin/privux-vpn debian/privux-vpn/usr/bin/privux-vpnctl

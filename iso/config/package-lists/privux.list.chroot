@@ -15,6 +15,14 @@ apparmor
 apparmor-utils
 systemd-resolved
 unattended-upgrades
+wireguard-tools
+python3-pyside6.qtwidgets
+polkitd
+pkexec
+iproute2
+procps
+openvpn
+network-manager-openvpn
 ca-certificates
 sudo
 curl

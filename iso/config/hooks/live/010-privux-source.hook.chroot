@@ -9,4 +9,18 @@ cat > /usr/local/bin/privux <<'EOF'
 PYTHONPATH=/opt/privux/src exec /usr/bin/python3 -m privux "$@"
 EOF
 chmod 0755 /usr/local/bin/privux
+install -d /usr/lib/python3/dist-packages/privux /usr/lib/privux
+cp -a /opt/privux-build/src/privux/. /usr/lib/python3/dist-packages/privux/
+install -m 755 /opt/privux-build/vpn/vpn-helper /usr/lib/privux/vpn-helper
+install -m 755 /opt/privux-build/vpn/privux-vpn /usr/bin/privux-vpn
+install -m 755 /opt/privux-build/vpn/privux-vpnctl /usr/bin/privux-vpnctl
+install -m 644 /opt/privux-build/vpn/privux-vpn.desktop /usr/share/applications/
+install -d /usr/share/plasma/systemsettings/externalmodules
+install -m 644 /opt/privux-build/vpn/privux-vpn-settings.desktop /usr/share/plasma/systemsettings/externalmodules/
+install -m 644 /opt/privux-build/vpn/org.orimpo.privux.vpn.policy /usr/share/polkit-1/actions/
+install -m 644 /opt/privux-build/vpn/privux-vpn-guard.service /etc/systemd/system/
+install -d /etc/systemd/system/NetworkManager.service.d /etc/systemd/system/systemd-networkd.service.d
+install -m 644 /opt/privux-build/vpn/vpn-guard-dependency.conf /etc/systemd/system/NetworkManager.service.d/privux-vpn.conf
+install -m 644 /opt/privux-build/vpn/vpn-guard-dependency.conf /etc/systemd/system/systemd-networkd.service.d/privux-vpn.conf
+systemctl enable privux-vpn-guard.service
 rm -rf /opt/privux-build
