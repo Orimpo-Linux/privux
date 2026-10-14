@@ -7,7 +7,7 @@ de Plasma i el preparador del servidor de proves són a
 [VPN-PRIMEROS-PASOS.md](docs/VPN-PRIMEROS-PASOS.md). La VPN no es connecta per
 defecte. Aquesta primera versió és per a proves; el servei públic encara no existeix.
 
-Distribució Linux de privacitat d'**Orimpo**. Aquest repositori conté la **fase 1 (prova de concepte)** del full de ruta: l'eina `privux` i els paquets Debian, sense ISO encara.
+Distribució Linux de privacitat d'**Orimpo**. Aquest repositori conté la **fase 1 (prova de concepte)** del full de ruta: l'eina `privux`, els paquets Debian i una **ISO live experimental** (Debian 13 + KDE Plasma, sense instal·lador) a `iso/`. La ISO no es publica com a release: es genera amb `scripts/build-live-iso.sh` o amb el workflow `live-iso.yml` de GitHub Actions. Vegeu [docs/live-iso.md](docs/live-iso.md).
 
 > Estat: prova de concepte. Pensat per provar-lo sobre un **Debian 13 amb KDE Plasma** instal·lat a mà, idealment en maquinari real.
 
