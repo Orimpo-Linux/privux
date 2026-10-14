@@ -28,3 +28,21 @@ sudo
 curl
 git
 python3
+# Cybersecurity: defensive and authorized analysis tools
+nmap
+wireshark
+tshark
+tcpdump
+whois
+dnsutils
+traceroute
+netcat-openbsd
+openssh-client
+clamav
+clamav-freshclam
+yara
+exiftool
+mat2
+# AppArmor profiles for compatible applications
+apparmor-profiles
+apparmor-profiles-extra
