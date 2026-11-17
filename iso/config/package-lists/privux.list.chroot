@@ -52,7 +52,7 @@ binwalk
 clamav
 clamav-freshclam
 yara
-radare2
+# radare2: unavailable in Debian 13 build repositories; deferred
 # Password auditing (authorized use only)
 john
 # VPN software, services and clients are intentionally excluded from Alpha 0.1.
