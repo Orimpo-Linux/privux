@@ -5,6 +5,8 @@ live-config
 systemd-sysv
 kde-plasma-desktop
 sddm
+plymouth
+plymouth-themes
 network-manager
 firefox-esr
 libreoffice
