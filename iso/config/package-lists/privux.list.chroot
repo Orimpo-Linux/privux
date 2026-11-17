@@ -36,7 +36,7 @@ whois
 dnsutils
 traceroute
 netcat-openbsd
-nikto
+# nikto: unavailable in configured Debian 13 repositories; deferred
 sqlmap
 dirb
 # Wireless auditing (requires compatible hardware)
