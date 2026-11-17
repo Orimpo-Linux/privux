@@ -40,7 +40,7 @@ EOF
 install -d /usr/share/sddm/themes/breeze
 cat > /usr/share/sddm/themes/breeze/theme.conf.user <<'EOF'
 [General]
-background=/usr/share/privux/branding/login.png
+background=/usr/share/privux/branding/login-clean.png
 EOF
 cat > /etc/sddm.conf.d/10-privux-theme.conf <<'EOF'
 [Theme]
