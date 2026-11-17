@@ -5,10 +5,10 @@ WALL=/usr/share/wallpapers/Privux/contents/images/privux-wallpaper.jpg
 
 # Keep Debian package compatibility while displaying the Privux product identity.
 cat > /etc/os-release <<'EOF'
-PRETTY_NAME="Privux OS 0.2 (Debian 13)"
+PRETTY_NAME="Privux Cyber Complete Alpha 0.1 (Debian 13)"
 NAME="Privux OS"
-VERSION_ID="0.2"
-VERSION="0.2 (Debian 13 trixie)"
+VERSION_ID="0.1"
+VERSION="Alpha 0.1 (Debian 13 trixie)"
 VERSION_CODENAME=trixie
 ID=debian
 ID_LIKE=debian
@@ -16,7 +16,7 @@ HOME_URL="https://github.com/Orimpo-Linux/privux"
 SUPPORT_URL="https://github.com/Orimpo-Linux/privux/issues"
 BUG_REPORT_URL="https://github.com/Orimpo-Linux/privux/issues"
 EOF
-printf '%s\n' 'Privux OS 0.2' > /etc/issue
+printf '%s\n' 'Privux Cyber Complete Alpha 0.1' > /etc/issue
 printf '%s\n' 'privux' > /etc/hostname
 
 if [ ! -s "$WALL" ]; then
@@ -40,7 +40,7 @@ EOF
 install -d /usr/share/sddm/themes/breeze
 cat > /usr/share/sddm/themes/breeze/theme.conf.user <<'EOF'
 [General]
-background=/usr/share/wallpapers/Privux/contents/images/privux-wallpaper.jpg
+background=/usr/share/privux/branding/login.png
 EOF
 cat > /etc/sddm.conf.d/10-privux-theme.conf <<'EOF'
 [Theme]
