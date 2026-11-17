@@ -1,38 +1,47 @@
 #!/bin/sh
 set -eu
-# Branding is applied only if the approved image assets are present.
 ASSETS=/usr/share/privux/branding
-if [ ! -s "$ASSETS/splash.png" ]; then
-  echo "Privux splash artwork missing: Plymouth customization deferred" >&2
-  exit 0
-fi
-install -d /usr/share/plymouth/themes/privux /etc/plymouth
-cp "$ASSETS/splash.png" /usr/share/plymouth/themes/privux/splash.png
-cat > /usr/share/plymouth/themes/privux/privux.plymouth <<'EOF'
+THEME=/usr/share/plymouth/themes/privux
+test -s "$ASSETS/frame00.png" || { echo "Missing Privux Plymouth frames" >&2; exit 1; }
+install -d "$THEME" /etc/plymouth
+cp "$ASSETS"/frame*.png "$THEME/"
+cat > "$THEME/privux.plymouth" <<'EOF'
 [Plymouth Theme]
 Name=Privux
-Description=Privux Alpha 0.1 startup
+Description=Privux Alpha 0.1 startup animation
 ModuleName=script
 
 [script]
 ImageDir=/usr/share/plymouth/themes/privux
 ScriptFile=/usr/share/plymouth/themes/privux/privux.script
 EOF
-cat > /usr/share/plymouth/themes/privux/privux.script <<'EOF'
-screen_width = Window.GetWidth();
-screen_height = Window.GetHeight();
-background = Image("splash.png");
-background_sprite = Sprite(background);
-background_sprite.SetX((screen_width - background.GetWidth()) / 2);
-background_sprite.SetY((screen_height - background.GetHeight()) / 2);
-# Original artwork is displayed without pretending to know real boot progress.
+cat > "$THEME/privux.script" <<'EOF'
+frames = [];
+for (i = 0; i < 16; i++) {
+    if (i < 10)
+        filename = "frame0" + i + ".png";
+    else
+        filename = "frame" + i + ".png";
+    frames[i] = Image(filename);
+}
+sprite = Sprite(frames[0]);
+sprite.SetX((Window.GetWidth() - frames[0].GetWidth()) / 2);
+sprite.SetY((Window.GetHeight() - frames[0].GetHeight()) / 2);
+tick = 0;
+fun refresh_callback() {
+    tick++;
+    # Visual loading effect, not a measured boot percentage.
+    index = Math.Int(tick / 9);
+    if (index > 15) index = 15;
+    sprite.SetImage(frames[index]);
+}
+Plymouth.SetRefreshFunction(refresh_callback);
 EOF
 cat > /etc/plymouth/plymouthd.conf <<'EOF'
 [Daemon]
 Theme=privux
 ShowDelay=0
 EOF
-# Rebuild initramfs so the splash can appear before the root filesystem mounts.
-if command -v update-initramfs >/dev/null 2>&1; then
-  update-initramfs -u -k all
-fi
+# Ensure the selected theme is included in the initramfs.
+plymouth-set-default-theme privux
+update-initramfs -u -k all
