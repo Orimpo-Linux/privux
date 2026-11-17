@@ -11,6 +11,7 @@ on:
       - "iso/**"
       - "privux-branding-assets.zip"
       - "scripts/build-live-iso.sh"
+      - "scripts/prepare-branding.py"
       - "src/privux/**"
       - ".github/workflows/live-iso.yml"
 permissions:
@@ -27,7 +28,7 @@ jobs:
       - name: Install build dependencies
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso grub-pc-bin grub-efi-amd64-bin mtools dosfstools rsync unzip ca-certificates
+          apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso grub-pc-bin grub-efi-amd64-bin mtools dosfstools rsync unzip python3-pil ca-certificates
       - name: Check package availability
         run: |
           apt-get update
