@@ -11,11 +11,8 @@ done
 mkdir -p "$ROOT/build/live"
 cd "$ROOT/build/live"
 rsync -a --delete "$ROOT/iso/" ./
-mkdir -p config/includes.chroot/opt/privux-build/src
-rsync -a "$ROOT/src/privux/" config/includes.chroot/opt/privux-build/src/privux/
-mkdir -p config/includes.chroot/opt/privux-build/vpn
-rsync -a "$ROOT/vpn/" config/includes.chroot/opt/privux-build/vpn/
-# Explicitly invoke config because the auto/config file is kept for local use.
+mkdir -p config/includes.chroot/opt/privux-build/src/privux
+rsync -a --exclude='vpn_*.py' "$ROOT/src/privux/" config/includes.chroot/opt/privux-build/src/privux/
 bash auto/config
 lb build
 echo "ISO build finished. Check $PWD for *.iso"
