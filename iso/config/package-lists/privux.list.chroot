@@ -1,4 +1,5 @@
-# Privux development live desktop
+# Privux Cyber Complete Alpha 0.1 — Debian 13 amd64, live-only
+# Daily desktop
 live-boot
 live-config
 systemd-sysv
@@ -10,25 +11,23 @@ libreoffice
 thunderbird
 flatpak
 plasma-discover-backend-flatpak
+# Security and system
 nftables
 apparmor
 apparmor-utils
+apparmor-profiles
+apparmor-profiles-extra
 systemd-resolved
 unattended-upgrades
-wireguard-tools
-python3-pyside6.qtwidgets
-polkitd
-pkexec
-iproute2
-procps
-openvpn
-network-manager-openvpn
 ca-certificates
 sudo
 curl
 git
 python3
-# Cybersecurity: defensive and authorized analysis tools
+openssh-client
+iproute2
+procps
+# Networking and authorized auditing
 nmap
 wireshark
 tshark
@@ -37,12 +36,23 @@ whois
 dnsutils
 traceroute
 netcat-openbsd
-openssh-client
+# nikto: unavailable in configured Debian 13 repositories; deferred
+sqlmap
+dirb
+# Wireless auditing (requires compatible hardware)
+aircrack-ng
+# Forensics and metadata
+sleuthkit
+testdisk
+foremost
+exiftool
+mat2
+binwalk
+# Malware detection and reverse engineering
 clamav
 clamav-freshclam
 yara
-exiftool
-mat2
-# AppArmor profiles for compatible applications
-apparmor-profiles
-apparmor-profiles-extra
+# radare2: unavailable in Debian 13 build repositories; deferred
+# Password auditing (authorized use only)
+john
+# VPN software, services and clients are intentionally excluded from Alpha 0.1.
