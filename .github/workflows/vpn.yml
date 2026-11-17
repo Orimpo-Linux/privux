@@ -1,5 +1,20 @@
 name: VPN validation
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    paths:
+      - "vpn/**"
+      - "scripts/*vpn*"
+      - "src/privux/vpn_*.py"
+      - "tests/test_vpn*.py"
+      - ".github/workflows/vpn.yml"
+  pull_request:
+    paths:
+      - "vpn/**"
+      - "scripts/*vpn*"
+      - "src/privux/vpn_*.py"
+      - "tests/test_vpn*.py"
+      - ".github/workflows/vpn.yml"
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
