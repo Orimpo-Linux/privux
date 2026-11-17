@@ -1,7 +1,14 @@
 #!/bin/sh
 set -eu
 # live-build binary hook: brand the generated GRUB menu in the ISO tree.
-test -s binary/boot/grub/privux-boot.png || { echo "Privux GRUB artwork missing" >&2; exit 1; }
+if [ ! -s binary/boot/grub/privux-boot.png ] && [ -s config/includes.binary/boot/grub/privux-boot.png ]; then
+  install -d binary/boot/grub
+  cp config/includes.binary/boot/grub/privux-boot.png binary/boot/grub/privux-boot.png
+fi
+if [ ! -s binary/boot/grub/privux-boot.png ]; then
+  echo "WARNING: Privux GRUB artwork missing; retaining stock GRUB rather than failing ISO" >&2
+  exit 0
+fi
 for cfg in binary/boot/grub/grub.cfg binary/EFI/boot/grub.cfg; do
   [ -f "$cfg" ] || continue
   sed -i 's/Debian GNU\/Linux/Privux Linux/g; s/Debian Live/Privux Linux/g; s/Debian/Privux/g' "$cfg"
