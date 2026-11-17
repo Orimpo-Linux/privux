@@ -5,7 +5,7 @@ if [[ ${EUID} -ne 0 ]]; then
   echo "Run with sudo: sudo bash scripts/build-live-iso.sh" >&2
   exit 1
 fi
-for cmd in lb rsync unzip; do
+for cmd in lb rsync unzip python3; do
   command -v "$cmd" >/dev/null || { echo "Missing dependency: $cmd" >&2; exit 1; }
 done
 mkdir -p "$ROOT/build/live"
@@ -23,6 +23,8 @@ fi
 chmod +x config/hooks/live/*.hook.chroot
 mkdir -p config/includes.chroot/opt/privux-build/src/privux
 rsync -a --exclude='vpn_*.py' "$ROOT/src/privux/" config/includes.chroot/opt/privux-build/src/privux/
+python3 "$ROOT/scripts/prepare-branding.py"
+chmod +x config/hooks/normal/*.hook.binary
 bash auto/config
 lb build
 echo "ISO build finished. Check $PWD for *.iso"
