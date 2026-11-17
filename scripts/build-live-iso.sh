@@ -11,6 +11,7 @@ done
 mkdir -p "$ROOT/build/live"
 cd "$ROOT/build/live"
 rsync -a --delete "$ROOT/iso/" ./
+chmod +x config/hooks/live/*.hook.chroot
 mkdir -p config/includes.chroot/opt/privux-build/src/privux
 rsync -a --exclude='vpn_*.py' "$ROOT/src/privux/" config/includes.chroot/opt/privux-build/src/privux/
 bash auto/config
