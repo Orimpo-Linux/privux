@@ -1,0 +1,38 @@
+#!/bin/sh
+set -eu
+# Branding is applied only if the approved image assets are present.
+ASSETS=/usr/share/privux/branding
+if [ ! -s "$ASSETS/splash.png" ]; then
+  echo "Privux splash artwork missing: Plymouth customization deferred" >&2
+  exit 0
+fi
+install -d /usr/share/plymouth/themes/privux /etc/plymouth
+cp "$ASSETS/splash.png" /usr/share/plymouth/themes/privux/splash.png
+cat > /usr/share/plymouth/themes/privux/privux.plymouth <<'EOF'
+[Plymouth Theme]
+Name=Privux
+Description=Privux Alpha 0.1 startup
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/privux
+ScriptFile=/usr/share/plymouth/themes/privux/privux.script
+EOF
+cat > /usr/share/plymouth/themes/privux/privux.script <<'EOF'
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+background = Image("splash.png");
+background_sprite = Sprite(background);
+background_sprite.SetX((screen_width - background.GetWidth()) / 2);
+background_sprite.SetY((screen_height - background.GetHeight()) / 2);
+# Original artwork is displayed without pretending to know real boot progress.
+EOF
+cat > /etc/plymouth/plymouthd.conf <<'EOF'
+[Daemon]
+Theme=privux
+ShowDelay=0
+EOF
+# Rebuild initramfs so the splash can appear before the root filesystem mounts.
+if command -v update-initramfs >/dev/null 2>&1; then
+  update-initramfs -u -k all
+fi
